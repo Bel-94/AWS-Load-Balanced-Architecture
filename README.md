@@ -32,6 +32,6 @@ The setup includes:
    - EC2 will use an IAM role to fetch files (not public objects).  
 5. Click **Create bucket**.  
 
-📸 Screenshot Placeholder: S3 Bucket Created  
+![Choose your repo and branch](images/mybucket.jpg)
 
 ---
