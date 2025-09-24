@@ -289,6 +289,20 @@ Your hosted zone will now look like this:
 
 ![Route 53 Records](images/hostedzonerecords.jpg) 
 
+##### Step 5 – Add Host Header Rules to ALB Listener  
+
+Now that Route 53 points traffic to the ALB, we need to tell the ALB how to forward requests for each subdomain.  
+
+1. Go to **EC2 → Load Balancers → Select your ALB → Listeners tab**.  
+2. Under **HTTP:80 listener**, click **View/edit rules**.  
+3. Add two new rules:  
+   - **Condition:** Host header = `red.mydemo.com` → **Action:** Forward to `Red-TG`.  
+   - **Condition:** Host header = `blue.mydemo.com` → **Action:** Forward to `Blue-TG`.  
+
+4. Save the rules.
+
+![Host Header Rules](images/hostheaderlisteners.jpg)
+
 **Test:**  
 - `http://red.mydemo.com` → Red app  
 - `http://blue.mydemo.com` → Blue app  
