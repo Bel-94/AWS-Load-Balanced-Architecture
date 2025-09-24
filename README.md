@@ -35,3 +35,12 @@ The setup includes:
 ![Choose your repo and branch](images/mybucket.jpg)
 
 ---
+
+### 2. Upload the Website Code
+1. Prepare your local project so that it contains two folders: `red/` and `blue/`, each with its own `index.html`.  
+2. In the **S3 Console**, open your bucket → click **Upload**.  
+3. Make sure you only upload correct files & folders
+
+![Choose your repo and branch](images/uploaded files & folder.jpg)
+
+---
