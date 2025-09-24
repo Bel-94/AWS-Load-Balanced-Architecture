@@ -41,6 +41,6 @@ The setup includes:
 2. In the **S3 Console**, open your bucket → click **Upload**.  
 3. Make sure you only upload correct files & folders
 
-![Choose your repo and branch](images/uploaded files & folder.jpg)
+![Choose your repo and branch](images/s3files.jpg)
 
 ---
