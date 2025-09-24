@@ -75,10 +75,38 @@ arn:aws:s3:::arr-bucket-123456/* (all objects inside)
 ```
 ➡ Replace `YOUR-BUCKET-ARN` with your actual bucket name.
 
-## Console Method
+## Steps to create the IAM Policy
 
 1. Go to **IAM → Policies → Create Policy → JSON tab**.  
 2. Paste the JSON above.  
 3. Name it: **S3-ARR-Policy**.  
 
 ![IAM Policy Created](images/iampolicy.jpg)
+
+## CLI Method
+
+```bash
+aws iam create-policy --policy-name S3-ARR-Policy --policy-document file://bucket-permissions.json
+```
+
+---
+
+## 5. Create IAM Role for EC2
+
+1. Go to **IAM → Roles → Create role**.  
+2. Select **AWS service → EC2**.  
+3. Attach the policy: **S3-ARR-Policy**.  
+4. Name it: **S3-ARR-Role**.  
+
+![EC2 IAM Role](images/ec2role.jpg)
+
+
+## CLI Method 
+
+```bash
+aws iam create-role --role-name S3-ARR-Role --assume-role-policy-document file://ec2-trust-policy.json
+aws iam attach-role-policy --role-name S3-ARR-Role --policy-arn arn:aws:iam::123456789012:policy/S3-ARR-Policy
+```
+
+---
+
