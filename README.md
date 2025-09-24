@@ -331,3 +331,11 @@ If this felt a little challenging at times, that’s totally normal — you’re
 As you keep practicing, you can try adding new features like HTTPS, weighted routing, or auto scaling. Each step builds your confidence and gets you closer to running real-world architectures.  
 
 **Well done — you took on a complex AWS service and made it work. That’s a big win!**
+
+### Author
+**Belinda Ntinyari** – [Medium](https://medium.com/@ntinyaribelinda) | [LinkedIn](https://www.linkedin.com/in/belinda-ntinyari/)
+
+---
+
+## License
+This project is licensed under the [MIT License](https://opensource.org/licenses/MIT).
