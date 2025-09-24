@@ -75,7 +75,7 @@ arn:aws:s3:::arr-bucket-123456/* (all objects inside)
 ```
 ➡ Replace `YOUR-BUCKET-ARN` with your actual bucket name.
 
-## Steps to create the IAM Policy
+### Steps to create the IAM Policy
 
 1. Go to **IAM → Policies → Create Policy → JSON tab**.  
 2. Paste the JSON above.  
@@ -83,7 +83,7 @@ arn:aws:s3:::arr-bucket-123456/* (all objects inside)
 
 ![IAM Policy Created](images/iampolicy.jpg)
 
-## CLI Method
+#### CLI Method
 
 ```bash
 aws iam create-policy --policy-name S3-ARR-Policy --policy-document file://bucket-permissions.json
@@ -101,7 +101,7 @@ aws iam create-policy --policy-name S3-ARR-Policy --policy-document file://bucke
 ![EC2 IAM Role](images/ec2role.jpg)
 
 
-## CLI Method 
+#### CLI Method 
 
 ```bash
 aws iam create-role --role-name S3-ARR-Role --assume-role-policy-document file://ec2-trust-policy.json
@@ -125,7 +125,7 @@ aws s3 cp --recursive s3://arr-bucket-123456/blue /var/www/html/blue
 
 ---
 
-# 7. Launch EC2 Instances (Red & Blue)
+## 7. Launch EC2 Instances (Red & Blue)
 
 1. Go to **EC2 → Instances → Launch Instance**.
 
@@ -154,23 +154,38 @@ aws s3 cp --recursive s3://arr-bucket-123456/blue /var/www/html/blue
 
 ---
 
-# 8. Create Target Groups
+## 8. Create Target Groups
 
 1. Go to **EC2 → Target Groups → Create target group**.  
 2. **Choose Instances** as target type.  
 
 ### Target Group 1 (Red)
-- **Name:** `tg-red`  
+- **Name:** `Red-TG`  
 - **Protocol:** HTTP  
 - **Port:** 80  
 - **Register:** Red instance  
 
 ### Target Group 2 (Blue)
-- **Name:** `tg-blue`  
+- **Name:** `Blue-TG`  
 - **Protocol:** HTTP  
 - **Port:** 80  
 - **Register:** Blue instance  
 
 ![Target Groups](images/createdtargetgrps.jpg)
+
 ---
 
+# 9. Create Application Load Balancer
+
+1. Go to **EC2 → Load Balancers → Create Load Balancer → Application Load Balancer**.  
+
+- **Name:** `ColorALB`  
+- **Scheme:** Internet-facing  
+- **Listeners:** HTTP on port 80  
+- **Availability Zones:** Select at least 2 subnets(the ones you used for your EC2s)  
+- **Security Group:** Allow HTTP (80)  
+- **Target Group:** Choose one (you will edit rules later)  
+
+![ALB](images/loadbalancer.jpg)
+
+---
