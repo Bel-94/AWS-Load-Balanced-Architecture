@@ -204,3 +204,36 @@ The first step is to set up the target groups; you need at least **2 target grou
 ![ALB](images/loadbalancer.jpg)
 
 ---
+
+# 10. Configure ALB Listener Rules
+
+## Path-Based Routing
+
+Once ALB is  active, under **Listeners and rules**, select the checkbox for your first listener.  
+Then, under the **Manage Rules** menu, click **Add rule**.  
+
+### Configure as follows:  
+- **Name and tags:** Ignore and click Next.  
+- **Conditions:** Click **Add condition**, select **Path** from the dropdown menu, and enter `/red*` for the path.  
+- **Actions:** Forward to the **Red target group**.  
+- **Priority:** Set to **1**.  
+
+Repeat the above creating a rule for the **Blue target group**:  
+- Path should be `/blue*`.  
+- Priority can be **2**.  
+
+![Path-based Routing](images/createdlisteners.jpg)  
+
+✅ **Test:**  
+Copy the **DNS name** from the Application Load Balancer and append either `/red` or `/blue` on the URL.  
+You should see the different colored custom web pages we added to our instances.
+
+- `http://<ALB-DNS>/red` → Red app 
+
+![Red App](images/redapplb.jpg) 
+
+- `http://<ALB-DNS>/blue` → Blue app  
+
+![Blue App](images/blueapplb.jpg)
+
+---
