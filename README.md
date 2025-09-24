@@ -110,3 +110,19 @@ aws iam attach-role-policy --role-name S3-ARR-Role --policy-arn arn:aws:iam::123
 
 ---
 
+## 6. Prepare User Data Scripts
+
+Name them: **user-data-red** and **user-data-blue**.  
+
+Replace `YOUR-BUCKET-NAME` with your actual bucket name.  
+
+Example commands:  
+
+```bash
+aws s3 cp --recursive s3://arr-bucket-123456/red /var/www/html/red
+aws s3 cp --recursive s3://arr-bucket-123456/blue /var/www/html/blue
+```
+
+---
+
+
