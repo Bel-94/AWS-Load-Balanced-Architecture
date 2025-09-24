@@ -45,7 +45,7 @@ The setup includes:
 
 ---
 
-## 3. Get Your Bucket ARN
+### 3. Get Your Bucket ARN
 1. In **S3 console** → open your bucket → go to **Properties**.  
 2. Copy the ARNs: 
 **For example:**
@@ -56,7 +56,7 @@ arn:aws:s3:::arr-bucket-123456/* (all objects inside)
 
 ---
 
-## 4. Create IAM Policy for S3 Access
+### 4. Create IAM Policy for S3 Access
 1. Create a JSON file `bucket-permissions.json` with:
 
 ```json
@@ -75,7 +75,7 @@ arn:aws:s3:::arr-bucket-123456/* (all objects inside)
 ```
 ➡ Replace `YOUR-BUCKET-ARN` with your actual bucket name.
 
-### Steps to create the IAM Policy
+#### Steps to create the IAM Policy
 
 1. Go to **IAM → Policies → Create Policy → JSON tab**.  
 2. Paste the JSON above.  
@@ -83,7 +83,7 @@ arn:aws:s3:::arr-bucket-123456/* (all objects inside)
 
 ![IAM Policy Created](images/iampolicy.jpg)
 
-#### CLI Method
+##### CLI Method
 
 ```bash
 aws iam create-policy --policy-name S3-ARR-Policy --policy-document file://bucket-permissions.json
@@ -91,7 +91,7 @@ aws iam create-policy --policy-name S3-ARR-Policy --policy-document file://bucke
 
 ---
 
-## 5. Create IAM Role for EC2
+### 5. Create IAM Role for EC2
 
 1. Go to **IAM → Roles → Create role**.  
 2. Select **AWS service → EC2**.  
@@ -101,7 +101,7 @@ aws iam create-policy --policy-name S3-ARR-Policy --policy-document file://bucke
 ![EC2 IAM Role](images/ec2role.jpg)
 
 
-#### CLI Method 
+##### CLI Method 
 
 ```bash
 aws iam create-role --role-name S3-ARR-Role --assume-role-policy-document file://ec2-trust-policy.json
@@ -110,7 +110,7 @@ aws iam attach-role-policy --role-name S3-ARR-Role --policy-arn arn:aws:iam::123
 
 ---
 
-## 6. Prepare User Data Scripts
+### 6. Prepare User Data Scripts
 
 Name them: **user-data-red** and **user-data-blue**.  
 
@@ -125,7 +125,7 @@ aws s3 cp --recursive s3://arr-bucket-123456/blue /var/www/html/blue
 
 ---
 
-## 7. Launch EC2 Instances (Red & Blue)
+### 7. Launch EC2 Instances (Red & Blue)
 
 1. Go to **EC2 → Instances → Launch Instance**.
 
@@ -154,9 +154,9 @@ aws s3 cp --recursive s3://arr-bucket-123456/blue /var/www/html/blue
 
 ---
 
-## 8. Create Target Groups
+### 8. Create Target Groups
 
-### Task 1 – Create Your Target Groups
+#### Task 1 – Create Your Target Groups
 The first step is to set up the target groups; you need at least **2 target groups** to configure Path-based routing.  
 
 1. Go to **EC2 → Target Groups** under **Load Balancing**.  
@@ -172,14 +172,14 @@ The first step is to set up the target groups; you need at least **2 target grou
    - Add the **Blue instance** to **Blue-TG** (be sure to click **include as pending below**).  
 
 
-#### Target Group 1 (Red)
+##### Target Group 1 (Red)
 - **Name:** `Red-TG`  
 - **Protocol:** HTTP  
 - **Port:** 80  
 - **Health Check Path:** `/red/index.html`  
 - **Register:** Red instance  
 
-#### Target Group 2 (Blue)
+##### Target Group 2 (Blue)
 - **Name:** `Blue-TG`  
 - **Protocol:** HTTP  
 - **Port:** 80  
@@ -190,7 +190,7 @@ The first step is to set up the target groups; you need at least **2 target grou
 
 ---
 
-## 9. Create Application Load Balancer
+### 9. Create Application Load Balancer
 
 1. Go to **EC2 → Load Balancers → Create Load Balancer → Application Load Balancer**.  
 
@@ -205,14 +205,14 @@ The first step is to set up the target groups; you need at least **2 target grou
 
 ---
 
-## 10. Configure ALB Listener Rules
+### 10. Configure ALB Listener Rules
 
-### Path-Based Routing
+#### Path-Based Routing
 
 Once ALB is  active, under **Listeners and rules**, select the checkbox for your first listener.  
 Then, under the **Manage Rules** menu, click **Add rule**.  
 
-#### Configure as follows:  
+##### Configure as follows:  
 - **Name and tags:** Ignore and click Next.  
 - **Conditions:** Click **Add condition**, select **Path** from the dropdown menu, and enter `/red*` for the path.  
 - **Actions:** Forward to the **Red target group**.  
@@ -239,7 +239,7 @@ You should see the different colored custom web pages we added to our instances.
 
 ### Host-Based Routing (Using Route 53 with a Fake Domain)
 
-#### Step 1 – Open Route 53 and Create a Public Hosted Zone  
+##### Step 1 – Open Route 53 and Create a Public Hosted Zone  
 - Go to **Route 53 → Hosted Zones**.  
 - Click **Create Hosted Zone**.  
 - **Domain name:** `mydemo.com` (fake, you don’t need to own it).  
@@ -248,7 +248,7 @@ You should see the different colored custom web pages we added to our instances.
 
 ![Hosted Zone](images/hostedzone.jpg)
 
-#### Step 2 – Create Subdomain Records (Blue & Red)  
+##### Step 2 – Create Subdomain Records (Blue & Red)  
 Inside your `mydemo.com` hosted zone:  
 
 1. Click **Create Record**.  
@@ -270,7 +270,7 @@ Inside your `mydemo.com` hosted zone:
 
     ![Creating Red Record](images/creatingredrecord.jpg)
 
-#### Step 3 – Create Apex/Naked Domain Record  
+##### Step 3 – Create Apex/Naked Domain Record  
 - Click **Create Record** again.  
 - **Record name:** (leave blank → this maps to `mydemo.com` itself).  
 - **Record type:** A.  
@@ -280,7 +280,7 @@ Inside your `mydemo.com` hosted zone:
 
 - Save.  
 
-#### Step 4 – Final DNS Records Layout  
+##### Step 4 – Final DNS Records Layout  
 Your hosted zone will now look like this:  
 
 - `mydemo.com` → ALB  
@@ -295,7 +295,7 @@ Your hosted zone will now look like this:
 
 ---
 
-## 11. Troubleshooting Checklist
+### 11. Troubleshooting Checklist
 
 Even pros hit bumps on the road — here’s a quick list to keep your setup running smoothly:  
 
@@ -317,7 +317,7 @@ Even pros hit bumps on the road — here’s a quick list to keep your setup run
 
 ---
 
-###  Conclusion  
+####  Conclusion  
 
 Congrats — you’ve just built a **working Application Load Balancer demo** with both **path-based** and **host-based routing**!   
 
@@ -337,5 +337,5 @@ As you keep practicing, you can try adding new features like HTTPS, weighted rou
 
 ---
 
-## License
+### License
 This project is licensed under the [MIT License](https://opensource.org/licenses/MIT).
