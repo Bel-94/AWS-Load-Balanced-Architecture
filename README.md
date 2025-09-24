@@ -156,26 +156,41 @@ aws s3 cp --recursive s3://arr-bucket-123456/blue /var/www/html/blue
 
 ## 8. Create Target Groups
 
-1. Go to **EC2 → Target Groups → Create target group**.  
-2. **Choose Instances** as target type.  
+### Task 1 – Create Your Target Groups
+The first step is to set up the target groups; you need at least **2 target groups** to configure Path-based routing.  
 
-### Target Group 1 (Red)
+1. Go to **EC2 → Target Groups** under **Load Balancing**.  
+2. Click **Create target group**.  
+3. Set up **2 target groups**:  
+   - One called `Red-TG` which will contain the Red targets.  
+   - One called `Blue-TG` which will contain the Blue targets.  
+4. Leave all defaults, except update the **target group name** and configure **health checks**:  
+   - For **Red-TG**: Health check path = `/red/index.html`  
+   - For **Blue-TG**: Health check path = `/blue/index.html`  
+5. Register the correct instances:  
+   - Add the **Red instance** to **Red-TG** (be sure to click **include as pending below**).  
+   - Add the **Blue instance** to **Blue-TG** (be sure to click **include as pending below**).  
+
+
+#### Target Group 1 (Red)
 - **Name:** `Red-TG`  
 - **Protocol:** HTTP  
 - **Port:** 80  
+- **Health Check Path:** `/red/index.html`  
 - **Register:** Red instance  
 
-### Target Group 2 (Blue)
+#### Target Group 2 (Blue)
 - **Name:** `Blue-TG`  
 - **Protocol:** HTTP  
 - **Port:** 80  
+- **Health Check Path:** `/blue/index.html`  
 - **Register:** Blue instance  
 
 ![Target Groups](images/createdtargetgrps.jpg)
 
 ---
 
-# 9. Create Application Load Balancer
+## 9. Create Application Load Balancer
 
 1. Go to **EC2 → Load Balancers → Create Load Balancer → Application Load Balancer**.  
 
