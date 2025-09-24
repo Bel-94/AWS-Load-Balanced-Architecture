@@ -125,4 +125,32 @@ aws s3 cp --recursive s3://arr-bucket-123456/blue /var/www/html/blue
 
 ---
 
+# 7. Launch EC2 Instances (Red & Blue)
+
+1. Go to **EC2 → Instances → Launch Instance**.
+
+2. **Choose AMI:**
+   - Select **Amazon Linux 2 AMI** (Free tier eligible).
+
+3. **Instance Type:**
+   - Choose **t2.micro**.
+
+4. **Key Pair:**
+   - **Proceed without a key pair** or create a **key pair**.
+
+5. **Network Settings:**
+   - Allow **HTTP (80)** and **SSH (22)**.
+
+6. **Advanced Details:**
+   - IAM Instance Profile: Select **S3-ARR-Role**.
+   - User Data: Paste the contents of:
+     - `user-data-red` (for the Red instance), or
+     - `user-data-blue` (for the Blue instance).
+
+7. **Launch Instances:**
+   - Launch **2 instances**: one Red and one Blue.
+
+![Launched EC2](images/launcedec2.jpg)
+
+---
 
