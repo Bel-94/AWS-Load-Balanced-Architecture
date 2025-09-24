@@ -24,3 +24,14 @@ The setup includes:
 
 ---
 
+### 1. Create the S3 Bucket
+1. Go to **AWS Console → S3 → Create bucket**.  
+2. Enter a **globally unique name**: e.g. `arr-bucket-123456`.  
+3. Region: **us-east-1 (N. Virginia)** to match the lab setup.  
+4. Keep **Block Public Access = ON** (recommended).  
+   - EC2 will use an IAM role to fetch files (not public objects).  
+5. Click **Create bucket**.  
+
+📸 Screenshot Placeholder: S3 Bucket Created  
+
+---
