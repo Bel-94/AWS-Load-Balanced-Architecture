@@ -270,7 +270,7 @@ Inside your `mydemo.com` hosted zone:
 
     ![Creating Red Record](images/creatingredrecord.jpg)
 
-### Step 3 – Create Apex/Naked Domain Record  
+#### Step 3 – Create Apex/Naked Domain Record  
 - Click **Create Record** again.  
 - **Record name:** (leave blank → this maps to `mydemo.com` itself).  
 - **Record type:** A.  
@@ -280,7 +280,7 @@ Inside your `mydemo.com` hosted zone:
 
 - Save.  
 
-### Step 4 – Final DNS Records Layout  
+#### Step 4 – Final DNS Records Layout  
 Your hosted zone will now look like this:  
 
 - `mydemo.com` → ALB  
@@ -294,3 +294,40 @@ Your hosted zone will now look like this:
 - `http://blue.mydemo.com` → Blue app  
 
 ---
+
+## 11. Troubleshooting Checklist
+
+Even pros hit bumps on the road — here’s a quick list to keep your setup running smoothly:  
+
+**Double-Check the Basics**  
+- Did you replace **YOUR-BUCKET-NAME** in the user-data scripts?  
+- Is the IAM role **S3-ARR-Role** properly attached to both EC2 instances?  
+
+**Files & Permissions**  
+- Do your IAM policies cover both the **bucket** and **bucket/*** (objects inside)?  
+- Did you upload the correct folder structure (`red/`, `blue/`) into your S3 bucket?  
+
+**On the Instances**  
+- Check `/var/log/cloud-init-output.log` to confirm your S3 files copied over.  
+- If the page doesn’t load, try `curl http://localhost` on the instance via SSH to test locally.  
+
+**At the Load Balancer Level**  
+- Are your listener rules (path or host-based) pointing to the right target groups?  
+- Do your health checks show **healthy** targets in both groups?  
+
+---
+
+###  Conclusion  
+
+Congrats — you’ve just built a **working Application Load Balancer demo** with both **path-based** and **host-based routing**!   
+
+- You launched EC2 instances with user data scripts,  
+- Configured target groups with health checks,  
+- Set up an Application Load Balancer,  
+- And routed traffic smartly using rules and DNS.  
+
+If this felt a little challenging at times, that’s totally normal — you’re learning! The important part is that you now understand the pieces and how they fit together.  
+
+As you keep practicing, you can try adding new features like HTTPS, weighted routing, or auto scaling. Each step builds your confidence and gets you closer to running real-world architectures.  
+
+**Well done — you took on a complex AWS service and made it work. That’s a big win!**
