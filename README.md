@@ -287,9 +287,9 @@ Your hosted zone will now look like this:
 - `red.mydemo.com` → ALB  
 - `blue.mydemo.com` → ALB  
 
-![Route 53 Records](images/creatingnakedrecord.jpg) 
+![Route 53 Records](images/hostedzonerecords.jpg) 
 
-✅ **Test:**  
+**Test:**  
 - `http://red.mydemo.com` → Red app  
 - `http://blue.mydemo.com` → Blue app  
 
