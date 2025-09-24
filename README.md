@@ -20,7 +20,7 @@ The setup includes:
 - **Application Load Balancer**: Distributes traffic.
 - **Route 53 Hosted Zone** (optional): For domain-based routing.
 
-![Project Architecture](images/Web Traffic Flow with AWS.png)
+![Project Architecture](images/architecture.png)
 
 ---
 
