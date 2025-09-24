@@ -20,7 +20,7 @@ The setup includes:
 - **Application Load Balancer**: Distributes traffic.
 - **Route 53 Hosted Zone** (optional): For domain-based routing.
 
-![Choose your repo and branch](images/aws_alb_demo_architecture.png)
+![Project Architecture](images/aws_alb_demo_architecture.png)
 
 ---
 
@@ -32,7 +32,7 @@ The setup includes:
    - EC2 will use an IAM role to fetch files (not public objects).  
 5. Click **Create bucket**.  
 
-![Choose your repo and branch](images/mybucket.jpg)
+![S3 Bucket](images/mybucket.jpg)
 
 ---
 
@@ -41,7 +41,7 @@ The setup includes:
 2. In the **S3 Console**, open your bucket → click **Upload**.  
 3. Make sure you only upload correct files & folders
 
-![Choose your repo and branch](images/s3files.jpg)
+![Bucket Files](images/s3files.jpg)
 
 ---
 
@@ -52,7 +52,33 @@ The setup includes:
 arn:aws:s3:::arr-bucket-123456 (bucket)  
 arn:aws:s3:::arr-bucket-123456/* (all objects inside)  
 
-![Choose your repo and branch](images/bucketarn.jpg)
+![Bucket ARN](images/bucketarn.jpg)
 
 ---
 
+## 4. Create IAM Policy for S3 Access
+1. Create a JSON file `bucket-permissions.json` with:
+
+```json
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "s3:GetObject"
+            ],
+            "Resource": "YOUR-BUCKET-ARN/*"
+        }
+    ]
+}
+```
+➡ Replace `YOUR-BUCKET-ARN` with your actual bucket name.
+
+## Console Method
+
+1. Go to **IAM → Policies → Create Policy → JSON tab**.  
+2. Paste the JSON above.  
+3. Name it: **S3-ARR-Policy**.  
+
+![IAM Policy Created](images/iampolicy.jpg)
