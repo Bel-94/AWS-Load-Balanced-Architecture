@@ -44,3 +44,15 @@ The setup includes:
 ![Choose your repo and branch](images/s3files.jpg)
 
 ---
+
+## 3. Get Your Bucket ARN
+1. In **S3 console** → open your bucket → go to **Properties**.  
+2. Copy the ARNs: 
+**For example:**
+arn:aws:s3:::arr-bucket-123456 (bucket)  
+arn:aws:s3:::arr-bucket-123456/* (all objects inside)  
+
+![Choose your repo and branch](images/bucketarn.jpg)
+
+---
+
