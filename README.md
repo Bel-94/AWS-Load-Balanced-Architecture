@@ -205,14 +205,14 @@ The first step is to set up the target groups; you need at least **2 target grou
 
 ---
 
-# 10. Configure ALB Listener Rules
+## 10. Configure ALB Listener Rules
 
-## Path-Based Routing
+### Path-Based Routing
 
 Once ALB is  active, under **Listeners and rules**, select the checkbox for your first listener.  
 Then, under the **Manage Rules** menu, click **Add rule**.  
 
-### Configure as follows:  
+#### Configure as follows:  
 - **Name and tags:** Ignore and click Next.  
 - **Conditions:** Click **Add condition**, select **Path** from the dropdown menu, and enter `/red*` for the path.  
 - **Actions:** Forward to the **Red target group**.  
@@ -224,7 +224,7 @@ Repeat the above creating a rule for the **Blue target group**:
 
 ![Path-based Routing](images/createdlisteners.jpg)  
 
-✅ **Test:**  
+**Test:**  
 Copy the **DNS name** from the Application Load Balancer and append either `/red` or `/blue` on the URL.  
 You should see the different colored custom web pages we added to our instances.
 
@@ -235,5 +235,62 @@ You should see the different colored custom web pages we added to our instances.
 - `http://<ALB-DNS>/blue` → Blue app  
 
 ![Blue App](images/blueapplb.jpg)
+
+
+### Host-Based Routing (Using Route 53 with a Fake Domain)
+
+#### Step 1 – Open Route 53 and Create a Public Hosted Zone  
+- Go to **Route 53 → Hosted Zones**.  
+- Click **Create Hosted Zone**.  
+- **Domain name:** `mydemo.com` (fake, you don’t need to own it).  
+- **Type:** Public Hosted Zone.  
+- Click **Create**.  
+
+![Hosted Zone](images/hostedzone.jpg)
+
+#### Step 2 – Create Subdomain Records (Blue & Red)  
+Inside your `mydemo.com` hosted zone:  
+
+1. Click **Create Record**.  
+   - **Record name:** `blue` (this makes it `blue.mydemo.com`).  
+   - **Record type:** A – Routes traffic to an IPv4 address or AWS resource.  
+   - **Value/Route traffic to:**  
+     - Choose **Alias → Application and Classic Load Balancer**.  
+     - **Region:** Select the region where your ALB lives.  
+     - **Target:** Select the ALB you created earlier (`ColorALB`).  
+    - **Should look like this**
+
+    ![Creating Blue Record](images/creatingbluerecord.jpg)
+
+   - Click **Create record**.  
+
+2. Repeat the same steps for `red.mydemo.com`:  
+   - **Record name:** `red`.  
+   - Everything else same as above, pointing to the same ALB. 
+
+    ![Creating Red Record](images/creatingredrecord.jpg)
+
+### Step 3 – Create Apex/Naked Domain Record  
+- Click **Create Record** again.  
+- **Record name:** (leave blank → this maps to `mydemo.com` itself).  
+- **Record type:** A.  
+- **Alias:** Yes → point to the same ALB.  
+
+![Creating Naked Record](images/creatingnakedrecord.jpg) 
+
+- Save.  
+
+### Step 4 – Final DNS Records Layout  
+Your hosted zone will now look like this:  
+
+- `mydemo.com` → ALB  
+- `red.mydemo.com` → ALB  
+- `blue.mydemo.com` → ALB  
+
+![Route 53 Records](images/creatingnakedrecord.jpg) 
+
+✅ **Test:**  
+- `http://red.mydemo.com` → Red app  
+- `http://blue.mydemo.com` → Blue app  
 
 ---
