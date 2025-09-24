@@ -154,3 +154,23 @@ aws s3 cp --recursive s3://arr-bucket-123456/blue /var/www/html/blue
 
 ---
 
+# 8. Create Target Groups
+
+1. Go to **EC2 → Target Groups → Create target group**.  
+2. **Choose Instances** as target type.  
+
+### Target Group 1 (Red)
+- **Name:** `tg-red`  
+- **Protocol:** HTTP  
+- **Port:** 80  
+- **Register:** Red instance  
+
+### Target Group 2 (Blue)
+- **Name:** `tg-blue`  
+- **Protocol:** HTTP  
+- **Port:** 80  
+- **Register:** Blue instance  
+
+![Target Groups](images/createdtargetgrps.jpg)
+---
+
