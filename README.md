@@ -12,3 +12,15 @@ Before you begin, make sure you have:
 - Basic knowledge of launching an **EC2 instance**.
 
 ---
+
+## Architecture
+The setup includes:
+- **2 EC2 Instances**: Blue server & Red server.
+- **Target Groups**: One for each server.
+- **Application Load Balancer**: Distributes traffic.
+- **Route 53 Hosted Zone** (optional): For domain-based routing.
+
+![Choose your repo and branch](images/aws_alb_demo_architecture.png)
+
+---
+
