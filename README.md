@@ -331,6 +331,24 @@ Even pros hit bumps on the road — here’s a quick list to keep your setup run
 
 ---
 
+### Exercise – Clean Up Your Resources  
+
+Once you’re done testing the demo, it’s a good practice to delete the resources you created. This prevents unnecessary charges from running services.  
+
+#### Task  – Delete Your Resources  
+
+Here’s what to remove:  
+
+- **Application Load Balancer (ALB)** – *chargeable*  
+- **Amazon EC2 Instances** – *chargeable*  
+- **Amazon S3 bucket** – *chargeable*  
+- **Target Groups** – *not chargeable*  
+- **Security Group** – *not chargeable*  
+- **Amazon Route 53 Alias Records** – *not chargeable*  
+
+**Note:** Always double-check before deleting resources if you’re running other projects in the same AWS account.  
+
+
 ####  Conclusion  
 
 Congrats — you’ve just built a **working Application Load Balancer demo** with both **path-based** and **host-based routing**!   
